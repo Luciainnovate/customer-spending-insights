@@ -1,0 +1,33 @@
+<header class="header">
+  <div class="header-left">
+    <button type="button" class="menu-button" aria-label="Menu">☰</button>
+    <div class="header-title">
+      <span class="header-label">CUSTOMER PORTAL</span>
+      <strong>Spending Insights</strong>
+    </div>
+  </div>
+
+  <div class="header-right">
+    <button type="button" class="notification-button" aria-label="Notifications">
+      <span class="notification-icon">♧</span>
+      <span class="notification-dot"></span>
+    </button>
+
+    <div class="divider"></div>
+
+    <div class="profile" (click)="toggleMenu()">
+      <div class="avatar">{{ initial }}</div>
+      <div class="profile-info">
+        <strong>{{ user?.firstName || 'User' }} {{ user?.lastName || '' }}</strong>
+        <span>{{ user?.role || 'Personal Banking' }}</span>
+      </div>
+      <span class="profile-arrow">⌄</span>
+
+      <!-- Dropdown -->
+      <div class="profile-dropdown" *ngIf="showMenu">
+        <button (click)="goProfile()">Profile Settings</button>
+        <button (click)="logout()">Logout</button>
+      </div>
+    </div>
+  </div>
+</header>

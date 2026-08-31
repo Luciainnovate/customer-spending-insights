@@ -1,0 +1,69 @@
+<div class="auth-wrapper">
+  <div class="auth-left">
+    <div class="brand">
+      <div class="logo">CSI</div>
+      <div class="brand-text">
+        <strong>SpendInsight</strong>
+        <span>Customer Spending Insights</span>
+      </div>
+    </div>
+    <div class="illustration-content">
+      <h1>Create your<br><span>account</span></h1>
+      <p>Start your 14-day free trial, no credit card required.</p>
+      <div class="feature-list">
+        <div class="f-item"><span class="check">✓</span> Full access to all features</div>
+        <div class="f-item"><span class="check">✓</span> Cancel anytime</div>
+        <div class="f-item"><span class="check">✓</span> Setup in 2 minutes</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="auth-right">
+    <div class="form-container">
+      <h2>Create account</h2>
+      <p class="subtitle">Get started for free</p>
+
+      <div class="alert error" *ngIf="error">{{error}}</div>
+      <div class="alert success" *ngIf="success">{{success}}</div>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="field">
+            <label>First Name</label>
+            <input formControlName="firstName" placeholder="John">
+          </div>
+          <div class="field">
+            <label>Last Name</label>
+            <input formControlName="lastName" placeholder="Doe">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Email</label>
+          <input type="email" formControlName="email" placeholder="you@company.com">
+        </div>
+
+        <div class="field">
+          <label>Password</label>
+          <div class="password-wrap">
+            <input [type]="show? 'text' : 'password'" formControlName="password" placeholder="Min. 6 characters">
+            <button type="button" class="eye" (click)="show=!show">{{show? '🙈' : '👁️'}}</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Confirm Password</label>
+          <div class="password-wrap">
+            <input [type]="show? 'text' : 'password'" formControlName="ConfirmPassword" placeholder="Confirm password">
+          </div>
+        </div>
+
+        <button class="btn-primary" type="submit" [disabled]="loading">
+          {{ loading? 'Creating...' : 'Create account' }}
+        </button>
+
+        <p class="switch">Already have an account? <a routerLink="/auth/login">Sign in</a></p>
+      </form>
+    </div>
+  </div>
+</div>

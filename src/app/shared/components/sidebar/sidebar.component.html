@@ -1,0 +1,88 @@
+<aside class="sidebar">
+
+  <!-- Logo -->
+  <div class="brand">
+
+    <div class="brand-logo">
+      CS
+    </div>
+
+    <div class="brand-content">
+      <span class="brand-title">Spending</span>
+      <span class="brand-subtitle">Insights</span>
+    </div>
+
+  </div>
+
+
+  <!-- Navigation -->
+  <nav class="navigation">
+
+    <a
+      routerLink="/dashboard"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="nav-item"
+    >
+      <span class="nav-icon">⌂</span>
+      <span class="nav-label">Dashboard</span>
+    </a>
+
+
+    <a
+      routerLink="/transactions"
+      routerLinkActive="active"
+      class="nav-item"
+    >
+      <span class="nav-icon">↕</span>
+      <span class="nav-label">Transactions</span>
+    </a>
+
+
+    <a
+      routerLink="/budgets"
+      routerLinkActive="active"
+      class="nav-item"
+    >
+      <span class="nav-icon">▣</span>
+      <span class="nav-label">Budgets</span>
+    </a>
+
+
+    <a
+      routerLink="/insights"
+      routerLinkActive="active"
+      class="nav-item"
+    >
+      <span class="nav-icon">✦</span>
+      <span class="nav-label">Insights</span>
+    </a>
+
+  </nav>
+
+
+  <!-- Bottom -->
+  <div class="sidebar-bottom">
+
+    <a class="nav-item">
+      <span class="nav-icon">⚙</span>
+      <span class="nav-label">Settings</span>
+    </a>
+
+
+    <div class="help-card">
+
+      <div class="help-icon">
+        ?
+      </div>
+
+      <div class="help-content">
+        <strong>Need help?</strong>
+        <span>Contact support</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</aside>
