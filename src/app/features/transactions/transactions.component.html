@@ -1,1 +1,89 @@
-<p>transactions works!</p>
+<div class="tx-page">
+
+  <div class="header">
+    <div>
+      <h1>Transactions</h1>
+      <p>All your spending for {{ months[selectedMonth-1].name }} {{ selectedYear }}</p>
+    </div>
+    <button mat-flat-button color="primary"><mat-icon>add</mat-icon> New transaction</button>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats">
+    <mat-card class="stat income"><mat-icon>trending_up</mat-icon><div><span>Income</span><strong>R{{ totalIncome | number:'1.2-2' }}</strong></div></mat-card>
+    <mat-card class="stat spending"><mat-icon>payments</mat-icon><div><span>Spending</span><strong>R{{ totalSpent | number:'1.2-2' }}</strong></div></mat-card>
+    <mat-card class="stat balance"><mat-icon>account_balance_wallet</mat-icon><div><span>Balance</span><strong>R{{ (totalIncome - totalSpent) | number:'1.2-2' }}</strong></div></mat-card>
+  </div>
+
+  <!-- Filters -->
+  <mat-card class="filters-card">
+    <mat-form-field appearance="outline">
+      <mat-label>Year</mat-label>
+      <mat-select [(value)]="selectedYear" (selectionChange)="load()">
+        <mat-option *ngFor="let y of years" [value]="y">{{y}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Month</mat-label>
+      <mat-select [(value)]="selectedMonth" (selectionChange)="load()">
+        <mat-option *ngFor="let m of months" [value]="m.value">{{m.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="search">
+      <mat-label>Search</mat-label>
+      <input matInput placeholder="Merchant, category..." [(ngModel)]="search" (input)="applyFilter()">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </mat-card>
+
+  <!-- Table -->
+  <mat-card class="table-card">
+    <table mat-table [dataSource]="filtered" class="full-width">
+
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef>Date</th>
+        <td mat-cell *matCellDef="let t">
+          <div class="date-cell"><strong>{{ t.date | date:'dd' }}</strong><span>{{ t.date | date:'MMM' }}</span></div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="merchant">
+        <th mat-header-cell *matHeaderCellDef>Merchant</th>
+        <td mat-cell *matCellDef="let t">
+          <div class="merchant-cell">
+            <div class="icon" [ngClass]="t.category.toLowerCase()"><mat-icon>{{ getIcon(t.category) }}</mat-icon></div>
+            <div><strong>{{ t.merchant }}</strong><span>{{ t.category }}</span></div>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef>Category</th>
+        <td mat-cell *matCellDef="let t"><span class="chip" [ngClass]="t.category.toLowerCase()">{{ t.category }}</span></td>
+      </ng-container>
+
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef>Type</th>
+        <td mat-cell *matCellDef="let t"><span class="type" [class]="t.type">{{ t.type }}</span></td>
+      </ng-container>
+
+      <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef>Amount</th>
+        <td mat-cell *matCellDef="let t" [class]="t.type">
+          <strong>{{ t.type === 'income'? '+' : '-' }} R{{ t.amount | number:'1.2-2' }}</strong>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <div class="empty" *ngIf="filtered.length===0">
+      <mat-icon>receipt_long</mat-icon>
+      <p>No transactions for this month</p>
+    </div>
+  </mat-card>
+
+</div>

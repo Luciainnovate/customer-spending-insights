@@ -1,16 +1,48 @@
 <div class="dashboard">
 
   <section class="welcome-section">
-    <div class="welcome-content">
-      <span class="eyebrow">FINANCIAL OVERVIEW</span>
-      <h1>{{ greeting }}, {{ user?.firstName || 'Lucia' }}</h1>
-      <p>Here's a summary of your spending for {{ currentMonth }}.</p>
-    </div>
-    <button class="period-selector">
-      <span>{{ currentMonth }}</span>
-      <span class="material-icons">expand_more</span>
-    </button>
-  </section>
+  <div class="welcome-content">
+    <span class="eyebrow">FINANCIAL OVERVIEW</span>
+
+    <h1>
+      {{ greeting }}, {{ user?.firstName || 'User' }}
+    </h1>
+
+    <p>
+      Here's a summary of your spending for {{ currentMonthLabel }}.
+    </p>
+  </div>
+
+  <div class="period-selector-group">
+
+    <select
+      [(ngModel)]="selectedYear"
+      (ngModelChange)="onPeriodChange()"
+      class="period-select">
+
+      <option
+        *ngFor="let y of years"
+        [ngValue]="y">
+        {{ y }}
+      </option>
+
+    </select>
+
+    <select
+      [(ngModel)]="selectedMonth"
+      (ngModelChange)="onPeriodChange()"
+      class="period-select">
+
+      <option
+        *ngFor="let m of months"
+        [ngValue]="m.value">
+        {{ m.name }}
+      </option>
+
+    </select>
+
+  </div>
+</section>
 
   <section class="summary-grid">
     <article class="summary-card">
@@ -81,7 +113,7 @@
     </article>
 
     <article class="panel category-panel">
-      <div class="panel-header"><div><h3>Spending by Category</h3><p>{{ currentMonth }}</p></div><button class="text-button">View all</button></div>
+      <div class="panel-header"><div><h3>Spending by Category</h3><p>{{ currentMonthLabel  }}</p></div><button class="text-button">View all</button></div>
       <div class="category-list">
         <div class="category-row" *ngFor="let cat of categories">
           <div class="category-details">

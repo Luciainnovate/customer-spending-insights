@@ -8,29 +8,34 @@ export class DashboardService {
 
   constructor(private http: HttpClient) {}
 
-  getSummary(year?: number, month?: number) {
+  // builds ?year=2026&month=8
+  private buildParams(year?: number, month?: number) {
     let params = new HttpParams();
-    if(year) params = params.set('year', year);
-    if(month) params = params.set('month', month);
-    return this.http.get<any>(`${this.base}/summary`, { params });
+    if (year) params = params.set('year', year.toString());
+    if (month) params = params.set('month', month.toString());
+    return params;
   }
 
-  getOverview() {
-    return this.http.get<any[]>(`${this.base}/overview`);
+  getSummary(year: number, month: number) {
+    return this.http.get<any>(`${this.base}/summary`, { params: this.buildParams(year, month) });
   }
 
-  getCategories(year?: number, month?: number) {
-    let params = new HttpParams();
-    if(year) params = params.set('year', year);
-    if(month) params = params.set('month', month);
-    return this.http.get<any[]>(`${this.base}/categories`, { params });
+  getOverview(year: number, month: number) {
+    return this.http.get<any[]>(`${this.base}/overview`, { params: this.buildParams(year, month) });
   }
 
-  getInsights() {
-    return this.http.get<any>(`${this.base}/insights`);
+  getCategories(year: number, month: number) {
+    return this.http.get<any[]>(`${this.base}/categories`, { params: this.buildParams(year, month) });
   }
 
-  getRecentTransactions(take = 5) {
-    return this.http.get<any[]>(`${environment.baseUrl}Transactions/recent?take=${take}`);
+  getInsights(year: number, month: number) {
+    return this.http.get<any>(`${this.base}/insights`, { params: this.buildParams(year, month) });
   }
+
+  getRecentTransactions(year: number, month: number) {
+    return this.http.get<any[]>(`${this.base}/transactions`, { params: this.buildParams(year, month) });
+  }
+  getBudgets(year: number, month: number) {
+  return this.http.get<any[]>(`${this.base}/budgets`, { params: this.buildParams(year, month) });
+}
 }

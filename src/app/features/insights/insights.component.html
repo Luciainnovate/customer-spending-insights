@@ -1,1 +1,8 @@
-<p>insights works!</p>
+<div class="page-header"><h1>Insights</h1><p>Based on {{ currentLabel }}</p></div>
+
+<div class="insights-list">
+  <div class="insight-card" *ngFor="let i of insights" [class]="i.type">
+    <h3>{{i.title}}</h3>
+    <p>{{i.message}}</p>
+  </div>
+</div>

@@ -778,7 +778,29 @@
   font-size: 15px;
 }
 
+.period-selector-group {
+  display: flex;
+  gap: 8px;
+  position: relative;
+  z-index: 10;
+  pointer-events: auto!important;
+}
 
+.period-select {
+  padding: 10px 16px;
+  border-radius: 20px;
+  border: 1px solid #e5e7eb;
+  background: white;
+  font-weight: 600;
+  cursor: pointer;
+  min-width: 110px;
+  pointer-events: auto!important;
+}
+
+.welcome-section {
+  pointer-events: auto!important;
+  overflow: visible!important;
+}
 /* =========================================
    RESPONSIVE
 ========================================= */

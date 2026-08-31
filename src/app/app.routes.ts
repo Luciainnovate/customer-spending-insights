@@ -16,11 +16,7 @@ export const routes: Routes = [
         path: 'register',
         loadComponent: () => import('./features/auth/register/register.component').then(m => m.RegisterComponent)
       },
-      {
-        path: '',
-        redirectTo: 'login',
-        pathMatch: 'full'
-      }
+      { path: '', redirectTo: 'login', pathMatch: 'full' }
     ]
   },
   {
@@ -33,18 +29,23 @@ export const routes: Routes = [
         loadComponent: () => import('./features/dashboard/dashboard.component').then(m => m.DashboardComponent)
       },
       {
+        path: 'transactions',
+        loadComponent: () => import('./features/transactions/transactions.component').then(m => m.TransactionsComponent)
+      },
+      {
+        path: 'budgets',
+        loadComponent: () => import('./features/budgets/budgets.component').then(m => m.BudgetsComponent)
+      },
+      {
+        path: 'insights',
+        loadComponent: () => import('./features/insights/insights.component').then(m => m.InsightsComponent)
+      },
+      {
         path: 'profile',
         loadComponent: () => import('./features/profile/profile.component').then(m => m.ProfileComponent)
       },
-      {
-        path: '',
-        redirectTo: 'dashboard',
-        pathMatch: 'full'
-      }
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   },
-  {
-    path: '**',
-    redirectTo: 'auth/login'
-  }
+  { path: '**', redirectTo: 'auth/login' }
 ];

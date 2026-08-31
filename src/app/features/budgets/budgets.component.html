@@ -1,1 +1,14 @@
-<p>budgets works!</p>
+<div class="page-header">
+  <h1>Budgets - {{ currentLabel }}</h1>
+</div>
+
+<div class="budget-grid">
+  <div class="budget-card" *ngFor="let b of budgets">
+    <div class="budget-top">
+      <span>{{b.category}}</span>
+      <span>R{{b.spent}} / R{{b.limit}}</span>
+    </div>
+    <div class="progress"><div class="fill" [style.width.%]="b.percent" [class.over]="b.percent>100"></div></div>
+    <span class="small">{{b.percent}}% used - {{b.remaining >=0? 'R'+b.remaining+' left' : 'Over by R'+(-b.remaining) }}</span>
+  </div>
+</div>
