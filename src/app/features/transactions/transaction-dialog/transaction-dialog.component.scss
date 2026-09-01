@@ -1,0 +1,106 @@
+/* force dialog container white */
+.cdk-overlay-pane .mat-mdc-dialog-surface {
+  background: #FFFFFF !important;
+}
+
+.dialog {
+  padding: 0;
+  min-width: 480px;
+  max-width: 560px;
+  background: #FFFFFF !important;
+  color: #0B1D3A !important;
+  border-radius: 14px;
+  display: block;
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px 0;
+  background: #FFFFFF;
+  h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 800;
+    color: #0B1D3A !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    mat-icon { color: #ED9724; }
+  }
+  button { color: #0B1D3A !important; }
+}
+
+form {
+  padding: 20px 24px 24px;
+  background: #FFFFFF;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.full { grid-column: 1 / -1; }
+
+/* --- THE FIX FOR INVISIBLE TEXT --- */
+.dialog .mat-mdc-form-field {
+  width: 100%;
+}
+
+.dialog .mat-mdc-text-field-wrapper {
+  background: #FFFFFF !important;
+}
+
+.dialog .mdc-text-field--outlined .mdc-notched-outline__leading,
+.dialog .mdc-text-field--outlined .mdc-notched-outline__notch,
+.dialog .mdc-text-field--outlined .mdc-notched-outline__trailing {
+  border-color: #CBD5E1 !important;
+}
+
+.dialog input.mat-mdc-input-element {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+.dialog .mat-mdc-select-value-text {
+  color: #000000 !important;
+}
+
+.dialog .mat-mdc-select-arrow {
+  color: #000000 !important;
+}
+
+.dialog .mat-mdc-form-field .mdc-floating-label {
+  color: #64748B !important;
+}
+
+.dialog .mat-mdc-form-field.mat-focused .mdc-floating-label {
+  color: #0B1D3A !important;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 8px;
+  button {
+    border-radius: 10px !important;
+    height: 44px;
+    &:first-child {
+      color: #0B1D3A !important;
+      border: 1px solid #E2E8F0 !important;
+      background: #FFFFFF !important;
+    }
+    &:last-child {
+      background: #ED9724 !important;
+      color: white !important;
+    }
+  }
+}
+
+@media(max-width:600px){
+  .dialog{ min-width: 90vw; }
+  .grid{ grid-template-columns: 1fr; }
+}

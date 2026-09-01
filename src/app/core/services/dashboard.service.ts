@@ -37,5 +37,10 @@ export class DashboardService {
   }
   getBudgets(year: number, month: number) {
   return this.http.get<any[]>(`${this.base}/budgets`, { params: this.buildParams(year, month) });
-}
+  }
+  
+  addTransaction(data: any) {
+    return this.http.post<any>(`${this.base}/transactions/add`, data);
+  }
+  
 }

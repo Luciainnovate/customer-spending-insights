@@ -5,14 +5,14 @@
       <h1>Transactions</h1>
       <p>All your spending for {{ months[selectedMonth-1].name }} {{ selectedYear }}</p>
     </div>
-    <button mat-flat-button color="primary"><mat-icon>add</mat-icon> New transaction</button>
+    <button mat-flat-button color="primary" (click)="openAddDialog()"><mat-icon>add</mat-icon> New transaction</button>
   </div>
 
-  <!-- Stats -->
+   <!-- Stats -->
   <div class="stats">
-    <mat-card class="stat income"><mat-icon>trending_up</mat-icon><div><span>Income</span><strong>R{{ totalIncome | number:'1.2-2' }}</strong></div></mat-card>
-    <mat-card class="stat spending"><mat-icon>payments</mat-icon><div><span>Spending</span><strong>R{{ totalSpent | number:'1.2-2' }}</strong></div></mat-card>
-    <mat-card class="stat balance"><mat-icon>account_balance_wallet</mat-icon><div><span>Balance</span><strong>R{{ (totalIncome - totalSpent) | number:'1.2-2' }}</strong></div></mat-card>
+    <mat-card class="stat income"><mat-icon>trending_up</mat-icon><div><span>Income (this month)</span><strong>R{{ totalIncome | number:'1.2-2' }}</strong></div></mat-card>
+    <mat-card class="stat spending"><mat-icon>payments</mat-icon><div><span>Spending (this month)</span><strong>R{{ totalSpent | number:'1.2-2' }}</strong></div></mat-card>
+    <mat-card class="stat balance"><mat-icon>account_balance_wallet</mat-icon><div><span>Available Balance (total)</span><strong>R{{ totalBalance | number:'1.2-2' }}</strong></div></mat-card>
   </div>
 
   <!-- Filters -->
@@ -41,7 +41,6 @@
   <!-- Table -->
   <mat-card class="table-card">
     <table mat-table [dataSource]="filtered" class="full-width">
-
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef>Date</th>
         <td mat-cell *matCellDef="let t">
@@ -85,5 +84,4 @@
       <p>No transactions for this month</p>
     </div>
   </mat-card>
-
 </div>

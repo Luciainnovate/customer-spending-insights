@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { DashboardService } from '../../core/services/dashboard.service'; // <-- ADD
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -11,6 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { TransactionDialogComponent } from './transaction-dialog/transaction-dialog.component';
 
 @Component({
   selector: 'app-transactions',
@@ -18,7 +21,8 @@ import { MatButtonModule } from '@angular/material/button';
   imports: [
     CommonModule, FormsModule,
     MatCardModule, MatFormFieldModule, MatSelectModule,
-    MatInputModule, MatIconModule, MatTableModule, MatChipsModule, MatButtonModule
+    MatInputModule, MatIconModule, MatTableModule, MatChipsModule,
+    MatButtonModule, MatDialogModule
   ],
   templateUrl: './transactions.component.html',
   styleUrls: ['./transactions.component.scss']
@@ -29,6 +33,8 @@ export class TransactionsComponent implements OnInit {
   search = '';
   selectedYear = new Date().getFullYear();
   selectedMonth = new Date().getMonth() + 1;
+  totalBalance = 0; // <-- ADD THIS
+
   years = [2024, 2025, 2026];
   months = [
     { value: 1, name: 'January' }, { value: 2, name: 'February' },
@@ -41,26 +47,43 @@ export class TransactionsComponent implements OnInit {
 
   displayedColumns = ['date', 'merchant', 'category', 'type', 'amount'];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private dialog: MatDialog, private dashboardService: DashboardService) {}
 
   ngOnInit() { this.load(); }
 
   load() {
     const params = new HttpParams()
-     .set('year', this.selectedYear)
-     .set('month', this.selectedMonth);
+      .set('year', this.selectedYear)
+      .set('month', this.selectedMonth)
+      .set('all', true);
 
     this.http.get<any[]>(`${environment.baseUrl}Dashboard/transactions`, { params })
-     .subscribe(res => {
+      .subscribe(res => {
         this.transactions = res;
         this.applyFilter();
       });
+
+    // GET TOTAL BALANCE FROM SUMMARY (cumulative)
+    this.dashboardService.getSummary(this.selectedYear, this.selectedMonth).subscribe((s: any) => {
+      this.totalBalance = s.balance; // s.balance is now cumulative from backend fix I gave you
+    });
   }
 
   applyFilter() {
     this.filtered = this.transactions.filter(t =>
-     !this.search || t.merchant.toLowerCase().includes(this.search.toLowerCase()) || t.category.toLowerCase().includes(this.search.toLowerCase())
+      !this.search || t.merchant.toLowerCase().includes(this.search.toLowerCase()) || t.category.toLowerCase().includes(this.search.toLowerCase())
     );
+  }
+
+  openAddDialog() {
+    const ref = this.dialog.open(TransactionDialogComponent, {
+      width: '560px',
+      disableClose: true,
+      panelClass: 'tx-dialog'
+    });
+    ref.afterClosed().subscribe(result => {
+      if (result) this.load();
+    });
   }
 
   get totalIncome() { return this.filtered.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0); }

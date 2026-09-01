@@ -1,0 +1,58 @@
+<div class="dialog">
+  <div class="dialog-header">
+    <h2><mat-icon>receipt</mat-icon> New Transaction</h2>
+    <button mat-icon-button (click)="close()"><mat-icon>close</mat-icon></button>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="save()">
+    <div class="grid">
+      <mat-form-field appearance="outline">
+        <mat-label>Type</mat-label>
+        <mat-select formControlName="type">
+          <mat-option value="expense">Expense</mat-option>
+          <mat-option value="income">Income</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Amount (R)</mat-label>
+        <input matInput type="number" formControlName="amount">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Category</mat-label>
+        <mat-select formControlName="category">
+          <mat-option value="Groceries">Groceries</mat-option>
+          <mat-option value="Transport">Transport</mat-option>
+          <mat-option value="Entertainment">Entertainment</mat-option>
+          <mat-option value="Shopping">Shopping</mat-option>
+          <mat-option value="Bills">Bills</mat-option>
+          <mat-option value="Salary">Salary</mat-option>
+          <mat-option value="Other">Other</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Merchant</mat-label>
+        <input matInput formControlName="merchant" placeholder="Shoprite">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Description</mat-label>
+        <input matInput formControlName="description">
+      </mat-form-field>
+    </div>
+
+    <div class="actions">
+      <button mat-stroked-button type="button" (click)="close()">Cancel</button>
+      <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid || loading">Add Transaction</button>
+    </div>
+  </form>
+</div>
