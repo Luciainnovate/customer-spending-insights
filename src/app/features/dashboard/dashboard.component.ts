@@ -70,4 +70,26 @@ export class DashboardComponent implements OnInit {
     const m = this.months.find(x => x.value === this.selectedMonth)?.name;
     return `${m} ${this.selectedYear}`;
   }
+
+    // ADD THESE
+  get maxOverviewValue(): number {
+    if (!this.overview.length) return 30000;
+    const max = Math.max(...this.overview.flatMap(o => [o.income, o.spending]));
+    return Math.ceil(max / 5000) * 5000 || 30000;
+  }
+
+  getChartPoints(type: 'income' | 'spending'): string {
+    if (!this.overview.length) return '';
+    const max = this.maxOverviewValue;
+    const count = this.overview.length;
+    const stepX = 600 / (count - 1 || 1);
+    
+    return this.overview.map((item, i) => {
+      const value = type === 'income' ? item.income : item.spending;
+      const x = i * stepX;
+      // invert Y: 0 at top, 220 at bottom
+      const y = 220 - (value / max) * 200 - 10;
+      return `${x},${y}`;
+    }).join(' ');
+  }
 }

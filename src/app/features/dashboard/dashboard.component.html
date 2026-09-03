@@ -95,17 +95,29 @@
   </section>
 
   <section class="analytics-grid">
-    <article class="panel spending-panel">
+       <article class="panel spending-panel">
       <div class="panel-header">
         <div><h3>Spending Overview</h3><p>Income and spending over the last 6 months</p></div>
         <button class="filter-button"><span>Last 6 months</span><span class="material-icons">expand_more</span></button>
       </div>
       <div class="chart">
-        <div class="y-axis"><span>R30k</span><span>R20k</span><span>R10k</span><span>R0</span></div>
+        <div class="y-axis">
+          <span>R{{ (maxOverviewValue) | number:'1.0-0' }}</span>
+          <span>R{{ (maxOverviewValue * 0.66) | number:'1.0-0' }}</span>
+          <span>R{{ (maxOverviewValue * 0.33) | number:'1.0-0' }}</span>
+          <span>R0</span>
+        </div>
         <div class="chart-area">
           <div class="grid-line line-1"></div><div class="grid-line line-2"></div><div class="grid-line line-3"></div><div class="grid-line line-4"></div>
-          <svg class="chart-svg income-chart" viewBox="0 0 600 220" preserveAspectRatio="none"><polyline points="0,80 100,65 200,75 300,55 400,65 500,35 600,45" fill="none" stroke="currentColor" stroke-width="3" /></svg>
-          <svg class="chart-svg spending-chart" viewBox="0 0 600 220" preserveAspectRatio="none"><polyline points="0,145 100,130 200,155 300,125 400,140 500,110 600,120" fill="none" stroke="currentColor" stroke-width="3" /></svg>
+          
+          <!-- DYNAMIC NOW -->
+          <svg class="chart-svg income-chart" viewBox="0 0 600 220" preserveAspectRatio="none">
+            <polyline [attr.points]="getChartPoints('income')" fill="none" stroke="currentColor" stroke-width="3" />
+          </svg>
+          <svg class="chart-svg spending-chart" viewBox="0 0 600 220" preserveAspectRatio="none">
+            <polyline [attr.points]="getChartPoints('spending')" fill="none" stroke="currentColor" stroke-width="3" />
+          </svg>
+
           <div class="x-axis"><span *ngFor="let item of overview">{{ item.month }}</span></div>
         </div>
       </div>
